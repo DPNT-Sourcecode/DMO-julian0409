@@ -41,5 +41,3 @@ public class DemoRound4n5Solution {
         return text.substring(start, Math.min(end, text.length())); // Extract substring safely
     }
 }
-
-
