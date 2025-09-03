@@ -23,5 +23,3 @@ public class DemoRound2Solution {
                 .toList();
     }
 }
-
-
