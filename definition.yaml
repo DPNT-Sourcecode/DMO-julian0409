@@ -1,0 +1,460 @@
+---
+$schema: "https://get.accelerate.io/challenge-toolkit/schema/version/0.2.1/schema.yaml"
+id: "DMO"
+version: 1
+name: "Demo challenge"
+rounds:
+- id: "DMO_R1"
+  description: |-
+    ROUND 1 - Primitive Types and String Matchers
+
+    Welcome to this demonstration round!
+
+    Here, you'll work with basic primitive types and explore various string matching capabilities.
+
+    This round showcases:
+    - Integer operations
+    - String manipulation
+    - Multi-line text handling
+    - Various assertion types (EQUALS, CONTAINS_STRING)
+
+    Your tasks:
+    1. Number manipulation: Increment a given integer by one.
+    2. String transformation: Convert text to uppercase.
+    3. Compose a letter to Santa: The matchers validates if it contains "Dear" and "Santa", ignoring the rest of the content.
+    4. Text analysis: Count the number of lines in a given multiline text.
+  methods:
+  - name: "increment"
+    params:
+    - description: "an integer"
+      type: "integer"
+    returns:
+      description: "an integer representing the number incremented by one"
+      type: "integer"
+  - name: "to_uppercase"
+    params:
+    - description: "a string"
+      type: "string"
+    returns:
+      description: "a string with all letters to uppercase"
+      type: "string"
+  - name: "letter_to_santa"
+    params: []
+    returns:
+      description: "a string with the contents of the letter to Santa"
+      type: "string"
+  - name: "count_lines"
+    params:
+    - description: "a multi-line string"
+      type: "string"
+    returns:
+      description: "an integer representing the number of lines"
+      type: "integer"
+  tests:
+  - id: "DMO_R1_001"
+    call:
+      method: "increment"
+      args:
+      - 0
+    expect:
+      equals: 1
+  - id: "DMO_R1_002"
+    call:
+      method: "increment"
+      args:
+      - 5
+    expect:
+      equals: 6
+  - id: "DMO_R1_003"
+    call:
+      method: "to_uppercase"
+      args:
+      - "a"
+    expect:
+      equals: "A"
+  - id: "DMO_R1_004"
+    call:
+      method: "to_uppercase"
+      args:
+      - "Ole"
+    expect:
+      equals: "OLE"
+  - id: "DMO_R1_005"
+    call:
+      method: "letter_to_santa"
+      args: []
+    expect:
+      containsString: "Santa"
+  - id: "DMO_R1_006"
+    call:
+      method: "letter_to_santa"
+      args: []
+    expect:
+      containsStringIgnoringCase: "Dear"
+  - id: "DMO_R1_007"
+    call:
+      method: "count_lines"
+      args:
+      - ""
+    expect:
+      equals: 0
+  - id: "DMO_R1_008"
+    call:
+      method: "count_lines"
+      args:
+      - "test"
+    expect:
+      equals: 1
+  - id: "DMO_R1_009"
+    call:
+      method: "count_lines"
+      args:
+      - |-
+        line one
+        line two
+    expect:
+      equals: 2
+- id: "DMO_R2"
+  description: |-
+    ROUND 2 - Array Types Demo
+
+    Welcome to the array manipulation round!
+    This round showcases array input/output handling.
+
+    Your tasks:
+    1. Array Sum: Calculate the sum of all integers in an array
+    2. Int Sequence Generation: Create an array containing a range of integers
+    3. Array Filtering: Filter an array to keep only values meeting a threshold
+
+    Each task builds on common array operations you'll encounter in real applications.
+  methods:
+  - name: "array_sum"
+    params:
+    - description: "an array of integers"
+      type: "list(integer)"
+    returns:
+      description: "an integer representing the sum of all values"
+      type: "integer"
+  - name: "int_range"
+    params:
+    - description: "start of the sequence - inclusive"
+      type: "integer"
+    - description: "end of the sequence - exclusive"
+      type: "integer"
+    returns:
+      description: "an array representing the sequence of integers"
+      type: "list(integer)"
+  - name: "filter_pass"
+    params:
+    - description: "an array of integers"
+      type: "list(integer)"
+    - description: "filter value - inclusive"
+      type: "integer"
+    returns:
+      description: "an array representing the values that are greater than or equal\
+        \ to the filter value"
+      type: "list(integer)"
+  tests:
+  - id: "DMO_R2_001"
+    call:
+      method: "array_sum"
+      args:
+      - []
+    expect:
+      equals: 0
+  - id: "DMO_R2_002"
+    call:
+      method: "array_sum"
+      args:
+      - - 1
+    expect:
+      equals: 1
+  - id: "DMO_R2_003"
+    call:
+      method: "array_sum"
+      args:
+      - - 1
+        - 2
+        - 3
+    expect:
+      equals: 6
+  - id: "DMO_R2_004"
+    call:
+      method: "int_range"
+      args:
+      - 1
+      - 1
+    expect:
+      equals: []
+  - id: "DMO_R2_005"
+    call:
+      method: "int_range"
+      args:
+      - 1
+      - 2
+    expect:
+      equals:
+      - 1
+  - id: "DMO_R2_006"
+    call:
+      method: "int_range"
+      args:
+      - 1
+      - 4
+    expect:
+      equals:
+      - 1
+      - 2
+      - 3
+  - id: "DMO_R2_007"
+    call:
+      method: "filter_pass"
+      args:
+      - []
+      - 1
+    expect:
+      equals: []
+  - id: "DMO_R2_008"
+    call:
+      method: "filter_pass"
+      args:
+      - - 1
+        - 2
+        - 3
+      - 1
+    expect:
+      equals:
+      - 1
+      - 2
+      - 3
+  - id: "DMO_R2_009"
+    call:
+      method: "filter_pass"
+      args:
+      - - 1
+        - 2
+        - 3
+        - 4
+      - 3
+    expect:
+      equals:
+      - 3
+      - 4
+- id: "DMO_R3"
+  description: |-
+    ROUND 3 - Object Types and Stateful Interactions
+
+    Welcome to the advanced inventory management round!
+    This round demonstrates working with objects and maintaining state between method calls.
+
+    Key Features:
+    - Object input/output handling with InventoryItem class
+    - Stateful inventory tracking across multiple operations
+    - Multiple interrelated methods working with shared state
+
+    Your tasks:
+    1. Inventory Management: Add items and track quantities
+       - Store new items or update existing ones
+       - Return current quantity after each operation
+
+    2. Inventory Statistics: Track unique items
+       - Count distinct items in inventory
+
+    3. Item Lookup: Retrieve items by SKU
+       - Return full item details when found
+       - Handle missing items appropriately
+
+    This round showcases real-world scenarios where maintaining state and working with complex objects are essential skills.
+  methods:
+  - name: "inventory_add"
+    params:
+    - description: "an inventory item"
+      type: "object({sku=string,name=string,price=integer})"
+    - description: "the quantity"
+      type: "integer"
+    returns:
+      description: "a integer value indicating the current quantity in the inventory"
+      type: "integer"
+  - name: "inventory_size"
+    params: []
+    returns:
+      description: "an integer representing the number of unique items in the inventory"
+      type: "integer"
+  - name: "inventory_get"
+    params:
+    - description: "a string representing the SKU to retrieve"
+      type: "string"
+    returns:
+      description: "the inventory item or null if not found"
+      type: "object({sku=string,name=string,price=integer})"
+  tests:
+  - id: "DMO_R3_001"
+    call:
+      method: "inventory_add"
+      args:
+      - sku: "IT01"
+        name: "Keyboard"
+        price: 10
+      - 1
+    expect:
+      equals: 1
+  - id: "DMO_R3_002"
+    call:
+      method: "inventory_add"
+      args:
+      - sku: "IT01"
+        name: "Keyboard"
+        price: 10
+      - 4
+    expect:
+      equals: 5
+  - id: "DMO_R3_003"
+    call:
+      method: "inventory_size"
+      args: []
+    expect:
+      equals: 1
+  - id: "DMO_R3_004"
+    call:
+      method: "inventory_add"
+      args:
+      - sku: "IT02"
+        name: "Mouse"
+        price: 4
+      - 2
+    expect:
+      equals: 2
+  - id: "DMO_R3_005"
+    call:
+      method: "inventory_size"
+      args: []
+    expect:
+      equals: 2
+  - id: "DMO_R3_006"
+    call:
+      method: "inventory_get"
+      args:
+      - "IT01"
+    expect:
+      equals:
+        sku: "IT01"
+        name: "Keyboard"
+        price: 10
+  - id: "DMO_R3_007"
+    call:
+      method: "inventory_get"
+      args:
+      - "MISS"
+    expect:
+      isNull: true
+- id: "DMO_R4"
+  description: |-
+    ROUND 4 - Refactoring Code - part 1
+
+    Welcome to Vintage Waves, a refactoring challenge based on legacy Vintage Basic code.
+
+    In this round, and the next, you'll see how the Accelerate platform can be used not only for greenfield
+    challenges but also for deploying and refactoring legacy code.
+
+    Key Features:
+    - Working on legacy code
+
+    Your tasks:
+    1. Get the legacy code for the language of choice from:
+        https://get.accelerate.io/vintage/waves/v01/index.html
+
+    2. Make the code compile and run in the context of the current project
+       - Replace the stdin interaction with the value provided as a parameter for the number of wave crests
+       - Capture the ASCII wave to a String and return from the method
+       - Do not change the wave generation logic
+
+    This round showcases a real-world refactoring situation.
+  methods:
+  - name: "waves"
+    params:
+    - description: "an integer representing the number of wave crests to generate"
+      type: "integer"
+    returns:
+      description: "a string containing the generated wave pattern"
+      type: "string"
+  tests:
+  - id: "DMO_R4_001"
+    call:
+      method: "waves"
+      args:
+      - 1
+    expect:
+      equals: "____....~~~~''''~~~~....____"
+  - id: "DMO_R4_002"
+    call:
+      method: "waves"
+      args:
+      - 2
+    expect:
+      equals: "__..~~''~~..____..~~''~~..__"
+  - id: "DMO_R4_003"
+    call:
+      method: "waves"
+      args:
+      - 3
+    expect:
+      equals: "_.~'~.__.~'~.__.~'~._"
+  - id: "DMO_R4_004"
+    call:
+      method: "waves"
+      args:
+      - 4
+    expect:
+      equals: "_.~'~.__.~'~.__.~'~.__.~'~._"
+- id: "DMO_R5"
+  description: |-
+    ROUND 5 - Refactoring Code - part 2
+
+    The previous round introduced the legacy code; now it’s time to tame it!
+    Choose a change you’d like to make and refactor the code.
+
+    Once you've completed the task, submit your code to finish the entire Demo challenge.
+
+    Key Features:
+    - Working on existing code
+
+    Your tasks:
+    1. Refactor the code:
+       - Ensure that the behaviour remains unchanged
+  methods:
+  - name: "waves"
+    params:
+    - description: "an integer representing the number of wave crests to generate"
+      type: "integer"
+    returns:
+      description: "a string containing the generated wave pattern"
+      type: "string"
+  tests:
+  - id: "DMO_R5_001"
+    call:
+      method: "waves"
+      args:
+      - 1
+    expect:
+      equals: "____....~~~~''''~~~~....____"
+  - id: "DMO_R5_002"
+    call:
+      method: "waves"
+      args:
+      - 2
+    expect:
+      equals: "__..~~''~~..____..~~''~~..__"
+  - id: "DMO_R5_003"
+    call:
+      method: "waves"
+      args:
+      - 3
+    expect:
+      equals: "_.~'~.__.~'~.__.~'~._"
+  - id: "DMO_R5_004"
+    call:
+      method: "waves"
+      args:
+      - 4
+    expect:
+      equals: "_.~'~.__.~'~.__.~'~.__.~'~._"
