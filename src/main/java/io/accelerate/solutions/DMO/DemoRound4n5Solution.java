@@ -1,8 +1,5 @@
 package io.accelerate.solutions.DMO;
 
-import java.text.DecimalFormat;
-import java.util.stream.IntStream;
-
 public class DemoRound4n5Solution {
 
     public String waves(Integer numberOfWaves) {
@@ -27,7 +24,9 @@ public class DemoRound4n5Solution {
                 result.append(mid(waveString, j, segmentWidth));
             }
 
-            result.append(System.lineSeparator()); // Add a line break for each crest
+            if (i != numberOfWaves) {
+                result.append(System.lineSeparator()); // Add a line break except for the last crest
+            }
         }
 
         return result.toString();
@@ -42,3 +41,4 @@ public class DemoRound4n5Solution {
         return text.substring(start, Math.min(end, text.length())); // Extract substring safely
     }
 }
+
