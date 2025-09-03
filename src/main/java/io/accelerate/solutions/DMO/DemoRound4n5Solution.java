@@ -1,45 +1,44 @@
 package io.accelerate.solutions.DMO;
 
-import io.accelerate.runner.SolutionNotImplementedException;
+import java.text.DecimalFormat;
+import java.util.stream.IntStream;
 
 public class DemoRound4n5Solution {
 
     public String waves(Integer numberOfWaves) {
-        // Ensure the input parameter is valid
-        if (numberOfWaves == null || numberOfWaves <= 0) {
-            throw new IllegalArgumentException("Number of waves must be a positive integer.");
+        // Validate input range
+        if (numberOfWaves < 1 || numberOfWaves > 4) {
+            throw new IllegalArgumentException("The number of waves must be between 1 and 4.");
         }
 
-        StringBuilder waveOutput = new StringBuilder();
-        int waveWidth = 6; // ASCII wave crest width
-        int waveHeight = 4; // Wave crest height
+        // Variables used in wave generation
+        StringBuilder result = new StringBuilder();
+        String waveString = "____....~~~~''''~~~~....____";
+        int waveElementCount = 7; // 7 segments in a cycle of the wave
+        int tabSpaces = 4;        // Tab factor for spacing
+        float waveTotalLength = waveString.length(); // Total length of the wave
+        float segmentLength = waveTotalLength / numberOfWaves; // N = L / F
+        float segmentWidth = segmentLength / waveElementCount; // S = N / E
 
-        // Generate each wave crest
-        for (int crest = 0; crest < numberOfWaves; crest++) {
-            for (int row = 0; row < waveHeight; row++) {
-                for (int col = 0; col < waveWidth; col++) {
-                    if (row == 0 && (col == 2 || col == 3)) {
-                        waveOutput.append("^"); // Top of the crest
-                    } else if (row == 1 && (col == 1 || col == 4)) {
-                        waveOutput.append("/"); // Slope of the crest
-                    } else if (row == 1 && (col == 2 || col == 3)) {
-                        waveOutput.append(" "); // Inner space of the crest
-                    } else if (row == 2 && col == 2) {
-                        waveOutput.append("\\"); // Bottom-left of the crest
-                    } else if (row == 2 && col == 3) {
-                        waveOutput.append("/"); // Bottom-right of the crest
-                    } else if (row == 3 && col == 0) {
-                        waveOutput.append("_"); // Base of the crest
-                    } else if (row == 3 && col == 5) {
-                        waveOutput.append("_"); // Base of the crest
-                    } else {
-                        waveOutput.append(" ");
-                    }
-                }
-                waveOutput.append("\n"); // Move to the next row
+        // Generate waves and store in result
+        for (int i = 1; i <= numberOfWaves; i++) {
+            for (float j = 1; j <= waveTotalLength; j += tabSpaces) {
+                // Append the substring as per the mid logic
+                result.append(mid(waveString, j, segmentWidth));
             }
+
+            result.append(System.lineSeparator()); // Add a line break for each crest
         }
 
-        return waveOutput.toString();
+        return result.toString();
+    }
+
+    /**
+     * Function to replicate the `MID$` behavior in Basic (substring extraction).
+     */
+    private String mid(String text, float startingIndex, float numChars) {
+        int start = Math.round(startingIndex - 1); // Convert 1-based index to 0-based
+        int end = Math.round(startingIndex + numChars - 1); // Calculate the ending index
+        return text.substring(start, Math.min(end, text.length())); // Extract substring safely
     }
 }
