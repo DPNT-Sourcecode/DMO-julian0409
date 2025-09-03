@@ -88,7 +88,6 @@ class Waves {
                 //1PRINT"WAVES"
                 case 1:
                     label = 2;
-                    print("WAVES");println();
                     break;
                 //2INPUT"TYPEINHOWMANYWAVESTODRAWASANUMBERBETWEEN1AND4";F:PRINT
                 case 2:
@@ -170,4 +169,5 @@ class Waves {
         }
     }
 }
+
 
