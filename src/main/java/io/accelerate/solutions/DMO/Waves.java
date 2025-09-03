@@ -74,100 +74,76 @@ class Waves {
 
         int iterations = 0;
 
-        mainLoop: while (true) {
-            iterations += 1;
-            if (iterations > 99999) {
-                print("INFINITE LOOP DETECTED. STOPPING EXECUTION.");println();
-                break mainLoop;
+        mainLoop:
+        while (true) {
+            if (++iterations > 99999) {
+                print("INFINITE LOOP DETECTED. STOPPING EXECUTION.");
+                println();
+                break;
             }
 
             if (loopActive11 && label > 13) loopActive11 = false;
             if (loopActive10 && label > 14) loopActive10 = false;
 
             switch (label) {
-                //1PRINT"WAVES"
-                case 1:
-                    label = 2;
-                    break;
-                //2INPUT"TYPEINHOWMANYWAVESTODRAWASANUMBERBETWEEN1AND4";F:PRINT
-                case 2:
+                case 1 -> label = 2;
+                case 2 -> {
                     label = 3;
                     scalarF = numberOfWaves;
-                    break;
-                //3W$="____....~~~~''''~~~~....____":E=7:MS=4
-                case 3:
+                }
+                case 3 -> {
                     label = 4;
                     stringW = "____....~~~~''''~~~~....____";
                     scalarE = 7;
                     scalarMS = 4;
-                    break;
-                //4L=LEN(W$)
-                case 4:
+                }
+                case 4 -> {
                     label = 5;
                     scalarL = len(stringW);
-                    break;
-                //5N=L/F:S=N/E
-                case 5:
+                }
+                case 5 -> {
                     label = 10;
-                    scalarN = scalarL/scalarF;
-                    scalarS = scalarN/scalarE;
-                    break;
-                //10FORI=1TOFSTEP1
-                case 10:
-                    label = 11;
-                    if (loopActive10 == false) {
+                    scalarN = scalarL / scalarF;
+                    scalarS = scalarN / scalarE;
+                }
+                case 10 -> {
+                    if (!loopActive10) {
                         scalarI = 1;
                         loopActive10 = true;
                     }
-                    if ((scalarI - scalarF) * 1 > 0) {
-                        label = 90;
-                    }
-                    break;
-                //11FORJ=1TOLSTEPMS
-                case 11:
-                    label = 12;
-                    if (loopActive11 == false) {
+                    label = (scalarI - scalarF > 0) ? 90 : 11;
+                }
+                case 11 -> {
+                    if (!loopActive11) {
                         scalarJ = 1;
                         loopActive11 = true;
                     }
-                    if ((scalarJ - scalarL) * scalarMS > 0) {
-                        label = 14;
-                    }
-                    break;
-                //12PRINTMID$(W$,J,S);
-                case 12:
+                    label = ((scalarJ - scalarL) * scalarMS > 0) ? 14 : 12;
+                }
+                case 12 -> {
                     label = 13;
                     print(mid(stringW, scalarJ, scalarS));
-                    break;
-                //13NEXTJ
-                case 13:
-                    label = 14;
-                    scalarJ = scalarJ + scalarMS;
+                }
+                case 13 -> {
+                    scalarJ += scalarMS;
                     label = 11;
-                    break;
-                //14NEXTI
-                case 14:
-                    label = 90;
-                    scalarI = scalarI + 1;
-                    label = 10;
-                    break;
-                //90PRINT
-                case 90:
+                }
+                case 14 -> {
+                    scalarI += 1;
+                    label = (scalarI - scalarF > 0) ? 90 : 10;
+                }
+                case 90 -> {
                     label = 99;
                     println();
-                    break;
-                //99END
-                case 99:
-                    label = 9999;
-                    label = 9999;
-                    break;
-                case 9999:
+                }
+                case 99 -> {
                     break mainLoop;
-                default:
-                    throw new IllegalStateException("The label " + label + " is not recognized.");
+                }
+                default -> throw new IllegalStateException("The label " + label + " is not recognized.");
             }
         }
     }
 }
+
 
 
