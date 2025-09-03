@@ -1,6 +1,7 @@
 package io.accelerate.solutions.DMO;
 
-import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 
 public class DemoRound4n5Solution {
 
@@ -10,16 +11,20 @@ public class DemoRound4n5Solution {
             throw new IllegalArgumentException("The number of waves must be between 1 and 4.");
         }
 
-        // Redirect stdin to simulate user input
-        ByteArrayInputStream inputStream = new ByteArrayInputStream(numberOfWaves.toString().getBytes());
-        System.setIn(inputStream);
+        // Redirect System.out to capture the legacy class's output
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        PrintStream originalOut = System.out; // Store the original System.out
+        System.setOut(new PrintStream(outputStream));
 
-        // Call legacy Waves.run() method
-        Waves.run();
+        try {
+            // Call the legacy Waves.run() and provide the required input
+            Waves.run(numberOfWaves);
+        } finally {
+            // Restore the original System.out
+            System.setOut(originalOut);
+        }
 
-        // Restore System.in if necessary
-        System.setIn(System.in);
-
-        return null; // Replace with actual captured output if needed
+        // Return the captured output as a string
+        return outputStream.toString().trim();
     }
 }

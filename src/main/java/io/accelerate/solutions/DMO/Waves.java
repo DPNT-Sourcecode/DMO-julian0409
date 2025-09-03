@@ -12,7 +12,7 @@ class Waves {
     }
 
     public static void main(String[] args) {
-        run();
+        run(3);
     }
 
     static int currentLineCharCount = 0;
@@ -57,9 +57,7 @@ class Waves {
         return (float) text.length();
     }
 
-    public static void run() {
-        Scanner scanner = new Scanner(System.in);
-
+    public static void run(Integer numberOfWaves) {
         int label = 1;
 
         float scalarE = 0;
@@ -95,10 +93,7 @@ class Waves {
                 //2INPUT"TYPEINHOWMANYWAVESTODRAWASANUMBERBETWEEN1AND4";F:PRINT
                 case 2:
                     label = 3;
-                    print("TYPE IN HOW MANY WAVES TO DRAW AS A NUMBER BETWEEN 1 AND 4");
-                    println();
-                    scalarF = Float.parseFloat(scanner.nextLine());
-                    println();
+                    scalarF = numberOfWaves;
                     break;
                 //3W$="____....~~~~''''~~~~....____":E=7:MS=4
                 case 3:
@@ -175,3 +170,4 @@ class Waves {
         }
     }
 }
+
