@@ -1,7 +1,5 @@
 package io.accelerate.solutions.DMO;
 
-import io.accelerate.runner.SolutionNotImplementedException;
-
 import java.util.List;
 
 public class DemoRound2Solution {
@@ -25,4 +23,5 @@ public class DemoRound2Solution {
                 .toList();
     }
 }
+
 
