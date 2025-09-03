@@ -11,25 +11,16 @@ public class DemoRound4n5Solution {
         // Variables used in wave generation
         StringBuilder result = new StringBuilder();
         String waveString = "____....~~~~''''~~~~....____";
-        int waveElementCount = 7; // 7 segments in a cycle of the wave
         float waveTotalLength = waveString.length(); // Total length of the wave
         float segmentLength = waveTotalLength / numberOfWaves; // N = L / F
-        float segmentWidth = segmentLength / waveElementCount; // S = N / E
 
-        // Generate the entire wave as a single string
-        for (float j = 1; j <= waveTotalLength; j += segmentWidth) {
-            result.append(mid(waveString, j, segmentWidth));
-        }
-
-        // Repeat the single wave segment as many times as necessary
-        String waveUnit = result.toString(); // Capture the one full crest
-        result.setLength(0); // Clear the StringBuilder
-
+        // Generate the entire wave step by step
         for (int i = 0; i < numberOfWaves; i++) {
-            result.append(waveUnit);
+            float start = (i * segmentLength) + 1; // Calculate start index for this crest
+            result.append(mid(waveString, start, segmentLength)); // Append the scaled segment
         }
 
-        return result.toString(); // Return complete wave without any newlines
+        return result.toString(); // Return the entire wave as a single continuous string
     }
 
     /**
@@ -38,6 +29,6 @@ public class DemoRound4n5Solution {
     private String mid(String text, float startingIndex, float numChars) {
         int start = Math.round(startingIndex - 1); // Convert 1-based index to 0-based
         int end = Math.round(startingIndex + numChars - 1); // Calculate the ending index
-        return text.substring(start, Math.min(end, text.length())); // Extract substring safely
+        return text.substring(start, Math.min(end, text.length())); // Safely extract substring
     }
 }
